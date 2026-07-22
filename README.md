@@ -122,12 +122,9 @@ setup.ps1             Creates the local Python environment and checks required a
 start.ps1             Starts the local Waitress server
 ```
 
-## Publishing notes
+## License
 
-- Runtime state is ignored by Git: `.venv`, caches, logs, and local databases are not committed.
-- Bundled models and browser runtimes are intentionally tracked so a clone can run offline after Python dependencies are installed.
-- Review [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and add a project license before making a public repository.
-- This is a visual-assistance tool, not a medical, biometric-identification, or emotion-diagnosis product.
+This project is licensed under the [MIT License](LICENSE).
 
 ## Contributing
 
