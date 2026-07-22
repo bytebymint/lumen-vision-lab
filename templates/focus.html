@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07110f">
+  <meta name="description" content="Private, on-device study focus coaching.">
+  <title>Lumen Focus</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to dashboard</a>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Back to Lumen Vision Lab">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 4c8.2 0 14.8 6.6 14.8 14.8S28.2 33.6 20 33.6 5.2 27 5.2 18.8 11.8 4 20 4Z"/>
+        <path d="M20 10.2a8.6 8.6 0 1 1 0 17.2 8.6 8.6 0 0 1 0-17.2Z"/>
+        <circle cx="20" cy="18.8" r="3.4"/>
+      </svg>
+      <span>Lumen</span><span class="brand-muted">Focus</span>
+    </a>
+    <div class="top-status" id="top-status">
+      <span class="privacy-pulse" aria-hidden="true"></span>
+      <span id="privacy-label">Camera is off</span>
+    </div>
+    <button class="icon-button" id="settings-button" type="button" aria-label="Open session settings" title="Session settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+    </button>
+  </header>
+
+  <main id="main-content" class="app-shell" tabindex="-1">
+    <section class="session-heading reveal">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-line"></span> Deep work session</p>
+        <h1>Stay with the <em>work.</em></h1>
+        <p class="heading-copy">Private, adaptive attention guidance that reads patterns, not people.</p>
+      </div>
+      <div class="session-clock" aria-label="Session elapsed time">
+        <span id="elapsed-time">00:00</span>
+        <small id="goal-label">of 50 min</small>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="camera-card panel reveal" style="--delay: 60ms">
+        <div class="camera-stage" id="camera-stage">
+          <video id="camera-video" playsinline muted aria-label="Live camera preview"></video>
+          <canvas id="landmark-canvas" aria-hidden="true"></canvas>
+          <div class="camera-shade" aria-hidden="true"></div>
+          <div class="camera-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="camera-placeholder" id="camera-placeholder">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 10 20 7v10l-5-3M4 6h11v12H4z"/></svg>
+            <strong>Your camera is private</strong>
+            <span>Frames are analysed only on this device</span>
+          </div>
+          <div class="camera-hud camera-hud-top">
+            <span class="live-chip"><i></i> <span id="camera-state-label">OFFLINE</span></span>
+            <span class="fps-chip" id="fps-label">0 FPS</span>
+          </div>
+          <div class="camera-hud camera-hud-bottom">
+            <span id="camera-name">No camera selected</span>
+            <button class="hud-button" id="change-camera-button" type="button">Change</button>
+          </div>
+        </div>
+        <div class="camera-footer">
+          <div class="signal-status">
+            <span class="status-orb" id="status-orb"></span>
+            <div><small>Current state</small><strong id="state-label">Ready when you are</strong></div>
+          </div>
+          <div class="session-actions">
+            <button class="button button-secondary" id="break-button" type="button" disabled>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14M17 5v14"/></svg>
+              Break
+            </button>
+            <button class="button button-primary" id="session-button" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 8 6-8 6Z"/></svg>
+              Set up camera
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <aside class="score-card panel reveal" style="--delay: 120ms" aria-labelledby="focus-score-title">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Live attention</p><h2 id="focus-score-title">Focus signal</h2></div>
+          <span class="confidence-pill" id="confidence-pill">No reading</span>
+        </div>
+        <div class="score-visual">
+          <svg class="score-ring" viewBox="0 0 220 220" role="img" aria-labelledby="score-ring-title">
+            <title id="score-ring-title">Focus score is not available</title>
+            <circle class="score-track" cx="110" cy="110" r="88"/>
+            <circle class="score-progress" id="score-progress" cx="110" cy="110" r="88" pathLength="100"/>
+            <circle class="score-glow" id="score-glow" cx="110" cy="110" r="88" pathLength="100"/>
+          </svg>
+          <div class="score-number"><strong id="score-value">--</strong><span>/ 100</span></div>
+        </div>
+        <p class="score-insight" id="score-insight">Complete a short calibration to establish your personal baseline.</p>
+        <div class="mini-metrics">
+          <div><span>Best streak</span><strong id="streak-value">0m</strong></div>
+          <div><span>Interruptions</span><strong id="interruptions-value">0</strong></div>
+          <div><span>Blinks / min</span><strong id="blink-value">--</strong></div>
+        </div>
+      </aside>
+
+      <article class="signals-card panel reveal" style="--delay: 180ms">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Why this score</p><h2>Signal detail</h2></div>
+          <button class="text-button" id="recalibrate-button" type="button" disabled>Recalibrate</button>
+        </div>
+        <div class="signal-list">
+          <div class="signal-row" data-signal="gaze">
+            <span class="signal-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.7"/></svg></span>
+            <div class="signal-copy"><span>Screen gaze</span><small id="gaze-detail">Waiting for baseline</small></div>
+            <div class="signal-meter"><i id="gaze-meter"></i></div><strong id="gaze-value">--</strong>
+          </div>
+          <div class="signal-row" data-signal="head">
+            <span class="signal-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M5 21c.8-4.1 3.1-6 7-6s6.2 1.9 7 6"/></svg></span>
+            <div class="signal-copy"><span>Head alignment</span><small id="head-detail">Waiting for baseline</small></div>
+            <div class="signal-meter"><i id="head-meter"></i></div><strong id="head-value">--</strong>
+          </div>
+          <div class="signal-row" data-signal="posture">
+            <span class="signal-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 7l5-4 5 4M7 17l5 4 5-4"/></svg></span>
+            <div class="signal-copy"><span>Posture stability</span><small id="posture-detail">Waiting for baseline</small></div>
+            <div class="signal-meter"><i id="posture-meter"></i></div><strong id="posture-value">--</strong>
+          </div>
+          <div class="signal-row" data-signal="fatigue">
+            <span class="signal-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12c2-2.7 4.7-4 8-4s6 1.3 8 4c-2 2.7-4.7 4-8 4s-6-1.3-8-4Z"/><path d="M8 12h8"/></svg></span>
+            <div class="signal-copy"><span>Fatigue load</span><small id="fatigue-detail">No fatigue trend yet</small></div>
+            <div class="signal-meter"><i id="fatigue-meter"></i></div><strong id="fatigue-value">--</strong>
+          </div>
+          <div class="signal-row" data-signal="phone">
+            <span class="signal-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10.5 18.2h3"/></svg></span>
+            <div class="signal-copy"><span>Phone attention</span><small id="phone-detail">No phone reading yet</small></div>
+            <div class="signal-meter"><i id="phone-meter"></i></div><strong id="phone-value">--</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-card panel reveal" style="--delay: 240ms">
+        <div class="panel-heading">
+          <div><p class="eyebrow">Session trace</p><h2>Attention over time</h2></div>
+          <div class="legend" aria-hidden="true"><span><i class="legend-focus"></i>Focused</span><span><i class="legend-drift"></i>Drifting</span></div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="focus-chart" role="img" aria-label="Focus score timeline. No readings yet."></canvas>
+          <div class="empty-chart" id="empty-chart"><span>Live trace begins with your session</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div class="intervention" id="intervention" role="status" aria-live="polite">
+    <span class="intervention-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9l5 3"/><circle cx="12" cy="12" r="9"/></svg></span>
+    <div><small id="intervention-kicker">Gentle reset</small><strong id="intervention-title">Bring your eyes back to the work</strong><p id="intervention-copy">You have been looking away for a little while.</p></div>
+    <button id="dismiss-intervention" type="button" aria-label="Dismiss reminder"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+  </div>
+
+  <div class="modal-backdrop is-open" id="setup-modal" role="dialog" aria-modal="true" aria-labelledby="setup-title">
+    <section class="setup-modal">
+      <div class="setup-progress" aria-label="Setup progress"><i class="active"></i><i></i><i></i></div>
+      <button class="modal-close" id="setup-close" type="button" aria-label="Close camera setup"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+
+      <div class="setup-step active" data-step="1">
+        <span class="step-label">Step 1 of 3</span>
+        <div class="setup-icon privacy-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7.2-4.4 11.7-11 14-6.6-2.3-11-6.8-11-14V7l11-4Z"/><path d="m11 16 3.2 3.2L21.5 12"/></svg></div>
+        <h2 id="setup-title">Your attention stays <em>yours.</em></h2>
+        <p>Allow camera access so Lumen can measure face landmarks on this device. Video frames never reach Flask, disk, or the internet.</p>
+        <div class="privacy-grid">
+          <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg><span><strong>On-device analysis</strong><small>Only numeric signals are saved</small></span></div>
+          <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z"/></svg><span><strong>No recordings</strong><small>Camera frames are never stored</small></span></div>
+        </div>
+        <div class="setup-error" id="permission-error" role="alert"></div>
+        <button class="button button-primary button-wide" id="permission-button" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 10 20 7v10l-5-3M4 6h11v12H4z"/></svg>
+          Allow camera access
+        </button>
+        <button class="link-button" id="continue-without-camera" type="button">Explore the interface without a camera</button>
+      </div>
+
+      <div class="setup-step" data-step="2">
+        <span class="step-label">Step 2 of 3</span>
+        <h2>Choose your <em>view.</em></h2>
+        <p>Select the camera facing you most directly. A centered, eye-level view produces the strongest readings.</p>
+        <div class="setup-preview"><video id="setup-video" playsinline muted></video><span id="preview-status">Camera preview</span></div>
+        <label class="field-label" for="camera-select">Camera</label>
+        <div class="select-wrap">
+          <select id="camera-select"></select>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg>
+        </div>
+        <div class="camera-tip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>Place the camera near the top-center of your screen and sit an arm's length away.</span></div>
+        <div class="setup-error" id="camera-error" role="alert"></div>
+        <button class="button button-primary button-wide" id="camera-confirm-button" type="button">Use this camera</button>
+        <button class="link-button step-back" type="button" data-back="1">Back</button>
+      </div>
+
+      <div class="setup-step" data-step="3">
+        <span class="step-label">Step 3 of 3</span>
+        <h2>Build your <em>baseline.</em></h2>
+        <p>Look naturally at the center of your screen. Keep your head comfortable, not artificially still.</p>
+        <div class="calibration-stage">
+          <video id="calibration-video" playsinline muted></video>
+          <div class="face-guide" id="face-guide"><i></i><span>Center your face</span></div>
+          <svg class="calibration-ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="54"/><circle id="calibration-progress" cx="60" cy="60" r="54" pathLength="100"/></svg>
+          <div class="calibration-count"><strong id="calibration-count">6</strong><span>seconds</span></div>
+        </div>
+        <div class="quality-row"><span>Signal quality</span><strong id="quality-label">Checking camera...</strong></div>
+        <div class="setup-error" id="calibration-error" role="alert"></div>
+        <button class="button button-primary button-wide" id="calibration-button" type="button" disabled>Start calibration</button>
+        <button class="link-button step-back" type="button" data-back="2">Choose another camera</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="summary-modal" role="dialog" aria-modal="true" aria-labelledby="summary-title">
+    <section class="summary-modal">
+      <p class="eyebrow">Session complete</p>
+      <h2 id="summary-title">A clear block of <em>work.</em></h2>
+      <div class="summary-score"><strong id="summary-score">--</strong><span>average focus</span></div>
+      <div class="summary-grid"><div><span>Focused time</span><strong id="summary-focused">0m</strong></div><div><span>Best streak</span><strong id="summary-streak">0m</strong></div><div><span>Interruptions</span><strong id="summary-interruptions">0</strong></div></div>
+      <p id="summary-message">Your session summary will appear here.</p>
+      <button class="button button-primary button-wide" id="new-session-button" type="button">Start another session</button>
+    </section>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop"></div>
+  <aside class="settings-drawer" id="settings-drawer" aria-labelledby="settings-title" aria-hidden="true">
+    <div class="drawer-heading"><div><p class="eyebrow">Preferences</p><h2 id="settings-title">Session settings</h2></div><button class="modal-close" id="settings-close" type="button" aria-label="Close settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+    <label class="field-label" for="goal-select">Focus block length</label>
+    <div class="select-wrap"><select id="goal-select"><option value="25">25 minutes</option><option value="50" selected>50 minutes</option><option value="75">75 minutes</option><option value="90">90 minutes</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg></div>
+    <label class="toggle-row"><span><strong>Gentle reminders</strong><small>Intervene only after sustained distraction</small></span><input type="checkbox" id="reminders-toggle" checked><i></i></label>
+    <label class="toggle-row"><span><strong>Landmark guide</strong><small>Show the subtle tracking mesh</small></span><input type="checkbox" id="landmarks-toggle" checked><i></i></label>
+    <label class="toggle-row"><span><strong>Sound cue</strong><small>Play a quiet tone with reminders</small></span><input type="checkbox" id="sound-toggle"><i></i></label>
+    <div class="drawer-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 21 7v6c0 5.6-3.6 8.5-9 10-5.4-1.5-9-4.4-9-10V7l9-4Z"/></svg><p><strong>Privacy by construction</strong>Settings and session metrics stay in this project. No images or identifying biometric templates are saved.</p></div>
+  </aside>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

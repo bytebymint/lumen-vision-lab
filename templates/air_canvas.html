@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050908"><title>Air Canvas | Lumen</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lab.css') }}">
+</head>
+<body class="canvas-lab">
+  <header class="lab-topbar">
+    <a class="lab-back" href="/" aria-label="Back to vision tools"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+    <div class="lab-name"><i></i> Air Canvas</div>
+    <div class="lab-privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 21 7v6c0 5.6-3.6 8.5-9 10-5.4-1.5-9-4.4-9-10V7l9-4Z"/></svg><span>On-device only</span></div>
+  </header>
+  <main class="vision-stage air-stage">
+    <video id="air-video" playsinline muted aria-label="Live camera view"></video>
+    <canvas id="air-ink" aria-label="Your air drawing"></canvas><canvas id="air-overlay" aria-label="Hand tracking overlay"></canvas>
+    <div class="stage-grid" aria-hidden="true"></div><div class="stage-vignette" aria-hidden="true"></div>
+    <div class="lab-status" id="air-status"><i></i><span>Camera off</span></div>
+    <section class="air-readout" aria-live="polite"><span id="air-mode">Ready</span><strong id="air-mode-title">Awaiting hand</strong><p id="air-instruction">Raise one index finger to paint light into the frame.</p></section>
+    <div class="gesture-guide" aria-hidden="true"><span><b>1</b> Draw</span><span><b>Fist</b> Pause</span><span><b>Pinch</b> Move</span></div>
+    <div class="air-actions" id="air-actions" hidden>
+      <button id="air-undo" type="button">Undo</button><button id="air-clear" type="button">Clear</button>
+      <label for="air-color">Ink</label><select id="air-color" aria-label="Ink color"><option value="#90f6d4">Mint</option><option value="#9bc8ff">Sky</option><option value="#ffb5cb">Rose</option><option value="#f8d570">Gold</option></select><label for="air-style">Style</label><select id="air-style" aria-label="Ink style"><option value="plasma">Plasma</option><option value="smoke">Smoke</option><option value="glitter">Glitter</option><option value="metal">Liquid metal</option><option value="stars">Constellation</option></select>
+      <select id="air-camera" aria-label="Active camera"></select><button class="icon-control" id="air-stop" type="button" aria-label="Stop camera"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12"/></svg></button>
+    </div>
+  </main>
+  <aside class="shape-offer" id="shape-offer" hidden aria-live="polite"><span>Shape suggestion</span><strong id="shape-name">Circle</strong><p>Keep the clean version or preserve your original stroke.</p><div><button id="shape-accept" type="button">Use clean shape</button><button id="shape-ignore" type="button">Keep original</button></div></aside>
+  <div class="lab-setup" id="air-setup" role="dialog" aria-modal="true" aria-labelledby="air-setup-title">
+    <section class="setup-card air-setup-card">
+      <div class="setup-symbol"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 25c7-1 8-15 13-16 4-1 4 5 1 7 5-1 7 1 5 5-4 5-12 8-19 4Z"/><path d="M20 6v-3m5 6 2-2M27 14h3"/></svg></div>
+      <span class="eyebrow">Hand-controlled light painting</span><h1 id="air-setup-title">Draw in the air.</h1>
+      <p>Show only your index finger to draw. Make a fist to pause. Touch your thumb and index finger to pick up a completed stroke and place it somewhere else.</p>
+      <label for="air-setup-camera">Camera</label><select id="air-setup-camera" aria-label="Choose camera"></select><div class="model-progress"><i id="air-model-progress"></i></div>
+      <button class="setup-button" id="air-start" type="button">Allow camera access</button><div class="setup-error" id="air-error" role="alert"></div>
+      <p class="setup-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z"/></svg> Hand tracking and every stroke stay on this device.</p>
+    </section>
+  </div>
+  <script type="module" src="{{ url_for('static', filename='js/air_canvas.js') }}"></script>
+</body>
+</html>

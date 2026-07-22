@@ -1,0 +1,7 @@
+* text=auto eol=lf
+
+*.woff2 binary
+*.wasm binary
+*.task binary
+*.tflite binary
+*.bin binary

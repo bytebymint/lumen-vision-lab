@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050908"><title>Expression + Age | Lumen</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lab.css') }}">
+</head>
+<body class="emotion-lab">
+  <header class="lab-topbar">
+    <a class="lab-back" href="/" aria-label="Back to vision tools"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+    <div class="lab-name"><i></i> Expression + Age</div>
+    <div class="lab-privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 21 7v6c0 5.6-3.6 8.5-9 10-5.4-1.5-9-4.4-9-10V7l9-4Z"/></svg><span>On-device only</span></div>
+  </header>
+  <main class="vision-stage">
+    <video id="emotion-video" playsinline muted aria-label="Live camera view"></video>
+    <canvas id="emotion-canvas" aria-label="Face analysis overlay"></canvas>
+    <div class="stage-grid" aria-hidden="true"></div><div class="stage-vignette" aria-hidden="true"></div>
+    <div class="lab-status" id="emotion-status"><i></i><span>Camera off</span></div>
+    <section class="expression-readout" aria-live="polite">
+      <span class="mode-label">Visible expression estimate</span><h1 id="emotion-primary">Waiting</h1>
+      <div class="expression-confidence"><div class="confidence-track"><i id="emotion-confidence"></i></div><span id="emotion-confidence-label">No reading</span></div>
+      <div class="age-readout"><span>Approximate age range</span><strong id="age-range">--</strong><small>Age from appearance is inherently approximate and can vary with lighting, pose, and demographic bias.</small></div>
+      <div class="emotion-list" id="emotion-list"></div>
+    </section>
+    <div class="lab-tip" id="emotion-tip">Use even front lighting and face the camera naturally. The system will say “uncertain” when evidence is weak.</div>
+    <div class="camera-control" id="emotion-controls" hidden>
+      <select id="emotion-camera" aria-label="Active camera"></select>
+      <button class="icon-control" id="emotion-stop" type="button" aria-label="Stop camera"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12"/></svg></button>
+    </div>
+  </main>
+  <div class="lab-setup" id="emotion-setup" role="dialog" aria-modal="true" aria-labelledby="emotion-setup-title">
+    <section class="setup-card">
+      <div class="setup-symbol"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16a11 11 0 1 0 22 0 11 11 0 0 0-22 0Z"/><path d="M11 13h2M19 13h2M11 21c3.4 2.6 6.6 2.6 10 0"/></svg></div>
+      <span class="eyebrow">Face mesh + trained classifiers</span><h1 id="emotion-setup-title">Read visible expression cues.</h1>
+      <p>The page combines a face detector, 468-point mesh, expression classifier, and age-regression model. Results are smoothed and withheld when confidence is weak.</p>
+      <label for="emotion-setup-camera">Camera</label><select id="emotion-setup-camera" aria-label="Choose camera"></select>
+      <div class="model-progress"><i id="emotion-model-progress"></i></div>
+      <p class="model-status" id="emotion-load-status">Loading local face models...</p>
+      <button class="setup-button" id="emotion-start" type="button">Allow camera access</button>
+      <div class="setup-error" id="emotion-error" role="alert"></div>
+      <p class="setup-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z"/></svg> Estimates are local, are not identity recognition, and are never saved.</p>
+    </section>
+  </div>
+  <script type="module" src="{{ url_for('static', filename='js/emotion.js') }}"></script>
+</body>
+</html>

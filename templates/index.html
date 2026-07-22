@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07110f">
+  <meta name="description" content="Four private, on-device computer vision experiences.">
+  <title>Lumen Vision Lab</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/suite.css') }}">
+</head>
+<body class="suite-home">
+  <div class="suite-noise" aria-hidden="true"></div>
+  <header class="suite-nav">
+    <a class="suite-brand" href="/" aria-label="Lumen Vision Lab home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c8.2 0 14.8 6.6 14.8 14.8S28.2 33.6 20 33.6 5.2 27 5.2 18.8 11.8 4 20 4Z"/><path d="M20 10.2a8.6 8.6 0 1 1 0 17.2 8.6 8.6 0 0 1 0-17.2Z"/><circle cx="20" cy="18.8" r="3.4"/></svg>
+      <span>Lumen <b>Vision Lab</b></span>
+    </a>
+    <span class="local-badge"><i></i> Local inference</span>
+  </header>
+
+  <main class="suite-main">
+    <section class="suite-hero">
+      <p class="suite-eyebrow">Private computer vision, in real time</p>
+      <h1>What should the camera <em>understand?</em></h1>
+      <p>Choose an experience. Every model runs on this device and every camera starts only after your permission.</p>
+    </section>
+
+    <section class="tool-grid" aria-label="Vision tools">
+      <a class="tool-card focus-tool" href="/focus">
+        <span class="tool-number">01</span>
+        <div class="tool-visual focus-visual" aria-hidden="true">
+          <div class="focus-orbit"><i></i><span>87</span></div>
+          <svg viewBox="0 0 280 160"><path d="M0 118c34-4 43-48 74-42 32 6 28 36 59 31 37-6 31-67 71-61 28 4 32 48 76 30"/></svg>
+        </div>
+        <div class="tool-copy"><span class="tool-kicker">Study intelligence</span><h2>Focus Monitor</h2><p>Gaze, posture, fatigue, face presence, and held-phone attention combined into one calibrated signal.</p></div>
+        <span class="tool-action">Open monitor <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+      </a>
+
+      <a class="tool-card fingers-tool" href="/fingers">
+        <span class="tool-number">02</span>
+        <div class="tool-visual hand-visual" aria-hidden="true">
+          <svg viewBox="0 0 240 180"><path d="M95 155c-7-21-15-44-19-62-3-11 11-16 16-5l9 24-7-72c-1-14 16-16 19-2l8 58-2-76c0-15 18-16 20-1l5 75 3-62c1-14 19-13 19 2l2 68 7-37c3-13 20-10 18 4l-7 51c-4 28-24 44-48 44h-18c-12 0-20-3-25-9Z"/><circle cx="118" cy="35" r="4"/><circle cx="139" cy="21" r="4"/><circle cx="166" cy="35" r="4"/><circle cx="190" cy="69" r="4"/></svg>
+          <strong>4</strong>
+        </div>
+        <div class="tool-copy"><span class="tool-kicker">Hand geometry</span><h2>Finger Numbers</h2><p>Show one or both hands. Twenty-one landmarks per hand become a stable number from zero to ten.</p></div>
+        <span class="tool-action">Count fingers <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+      </a>
+
+      <a class="tool-card emotion-tool" href="/emotion">
+        <span class="tool-number">03</span>
+        <div class="tool-visual emotion-visual" aria-hidden="true">
+          <div class="face-frame"><i></i><i></i><span>HAPPY<small>91%</small></span></div>
+          <div class="age-chip">~ 24-29</div>
+        </div>
+        <div class="tool-copy"><span class="tool-kicker">Face understanding</span><h2>Expression + Age</h2><p>Multi-model facial expression estimates, mesh quality checks, and an approximate age range.</p></div>
+        <span class="tool-action">Read expression <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+      </a>
+
+      <a class="tool-card canvas-tool" href="/canvas">
+        <span class="tool-number">04</span>
+        <div class="tool-visual canvas-visual" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 250 150"><path d="M20 107c28-58 48 21 77-22 30-45 32 17 61-15 27-30 40-6 70-43"/></svg></div>
+        <div class="tool-copy"><span class="tool-kicker">Gesture drawing</span><h2>Air Canvas</h2><p>Draw with one raised index finger, pause with a fist, and pinch to pick up and move your finished strokes.</p></div>
+        <span class="tool-action">Open canvas <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></span>
+      </a>
+    </section>
+
+    <footer class="suite-footer"><span>No video leaves your browser</span><span>No recordings</span><span>No identity recognition</span></footer>
+  </main>
+</body>
+</html>
