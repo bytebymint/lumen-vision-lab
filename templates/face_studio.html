@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b15"><title>Face Studio | Lumen</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/face_studio.css') }}">
+</head>
+<body class="face-studio">
+  <header class="studio-topbar">
+    <a class="studio-back" href="/" aria-label="Back to vision tools"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></a>
+    <div class="studio-name"><i></i> Face Studio</div>
+    <div class="studio-privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 21 7v6c0 5.6-3.6 8.5-9 10-5.4-1.5-9-4.4-9-10V7l9-4Z"/></svg><span>Local-only masks</span></div>
+  </header>
+  <main class="studio-stage">
+    <video id="studio-video" playsinline muted aria-label="Live camera view"></video>
+    <canvas id="studio-canvas" aria-label="Live face mask overlay"></canvas>
+    <div class="studio-vignette" aria-hidden="true"></div>
+    <div class="studio-status" id="studio-status"><i></i><span>Camera off</span></div>
+    <aside class="studio-copy" aria-live="polite">
+      <span class="studio-kicker" id="studio-mode-label">READY</span><h1 id="studio-title">Face<br><em>Studio.</em></h1>
+      <p id="studio-description">Choose a local effect. Every frame stays in this browser.</p>
+      <div class="tracking-meter"><span>Tracking</span><div><i id="studio-tracking"></i></div><strong id="studio-tracking-label">Waiting</strong></div>
+    </aside>
+    <section class="studio-controls" id="studio-controls" hidden aria-label="Face Studio controls">
+      <div class="effect-row" role="group" aria-label="Built-in effects">
+        <button class="effect-card active" type="button" data-effect="neon"><span class="effect-orb neon"></span><b>Neon Muse</b><small>Expressive avatar</small></button>
+        <button class="effect-card" type="button" data-effect="fox"><span class="effect-orb fox"></span><b>Solar Fox</b><small>Head + eye sync</small></button>
+        <button class="effect-card" type="button" data-effect="pixel"><span class="effect-orb pixel"></span><b>Pixel Pulse</b><small>Reactive face</small></button>
+        <button class="effect-card" type="button" data-effect="blur"><span class="effect-orb blur"></span><b>Soft Blur</b><small>Privacy mask</small></button>
+      </div>
+      <div class="control-row">
+        <label class="portrait-upload" for="studio-upload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4 4 4M5 14v5h14v-5"/></svg><span id="upload-label">Use portrait mask</span><input id="studio-upload" type="file" accept="image/png,image/jpeg,image/webp" hidden></label>
+        <button class="control-button" id="studio-clear-upload" type="button" hidden>Remove portrait</button>
+        <select id="studio-camera" aria-label="Active camera"></select>
+        <button class="stop-button" id="studio-stop" type="button" aria-label="Stop camera"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12"/></svg></button>
+      </div>
+    </section>
+    <div class="studio-notice" id="studio-notice">Effects are visual masks, not identity verification. Portrait masks retain your real eyes and mouth for live expression sync.</div>
+  </main>
+  <div class="studio-setup" id="studio-setup" role="dialog" aria-modal="true" aria-labelledby="studio-setup-title">
+    <section class="setup-card">
+      <div class="setup-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4a12 12 0 1 0 0 24A12 12 0 0 0 16 4Z"/><path d="M11 14h2m6 0h2m-8 7c2.1 1.6 3.9 1.6 6 0"/><path d="M5 17v4m22-4v4"/></svg></div>
+      <span class="setup-eyebrow">Face mesh + local canvas compositor</span><h1 id="studio-setup-title">Make the camera<br><em>more playful.</em></h1>
+      <p>Face Studio tracks head position, head turn, eyes, mouth, and face contour with a local 468-point face mesh. It is designed for visual effects, not impersonation or biometric verification.</p>
+      <label class="consent-line"><input id="studio-consent" type="checkbox"><span>I have permission to use this camera and any portrait image I choose.</span></label>
+      <label for="studio-setup-camera">Camera</label><select id="studio-setup-camera" aria-label="Choose camera"></select>
+      <div class="load-progress"><i id="studio-progress"></i></div><p class="load-status" id="studio-load-status">The local face model starts after camera permission.</p>
+      <button class="setup-button" id="studio-start" type="button">Allow camera access</button><div class="setup-error" id="studio-error" role="alert"></div>
+      <p class="setup-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z"/></svg> Video frames and portrait uploads never leave this browser and are discarded when the page closes.</p>
+    </section>
+  </div>
+  <script type="module" src="{{ url_for('static', filename='js/face_studio.js') }}"></script>
+</body>
+</html>

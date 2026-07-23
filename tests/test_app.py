@@ -25,7 +25,7 @@ class FocusMonitorApiTests(unittest.TestCase):
         self.assertIn("default-src 'self'", response.headers["Content-Security-Policy"])
 
     def test_all_vision_pages_render(self):
-        for path, heading in (("/", "What should the camera"), ("/focus", "Stay with the"), ("/fingers", "Show a number"), ("/emotion", "Read visible expression"), ("/canvas", "Draw in the air")):
+        for path, heading in (("/", "What should the camera"), ("/focus", "Stay with the"), ("/fingers", "Show a number"), ("/emotion", "Read visible expression"), ("/canvas", "Draw in the air"), ("/face-studio", "Face Studio")):
             response = self.client.get(path)
             self.assertEqual(response.status_code, 200)
             self.assertIn(heading, response.get_data(as_text=True))

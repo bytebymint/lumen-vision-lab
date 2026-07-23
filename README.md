@@ -1,6 +1,6 @@
 # Lumen Vision Lab
 
-Lumen Vision Lab is a local-first Flask application with four browser-based computer-vision experiences. Camera frames are processed in the browser; the Python server serves the application and stores only numeric Focus Monitor session metrics in a project-local SQLite database.
+Lumen Vision Lab is a local-first Flask application with five browser-based computer-vision experiences. Camera frames are processed in the browser; the Python server serves the application and stores only numeric Focus Monitor session metrics in a project-local SQLite database.
 
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20browser-1f7a6e)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab)
@@ -14,11 +14,13 @@ Lumen Vision Lab is a local-first Flask application with four browser-based comp
 | **Finger Numbers** | Reads one or two hands and produces a stable number from zero to ten using 21 landmarks per hand. |
 | **Expression + Age** | Runs local face detection, mesh, expression, and age-estimation models with confidence gating. Age and expression are approximate visual estimates, not facts about identity or feelings. |
 | **Air Canvas** | Draws with one raised index finger, pauses with a fist, and moves completed strokes with a thumb-index pinch. Includes local shape suggestions and several ink styles. |
+| **Face Studio** | Applies local landmark-synced full-head avatars, face blur, or a user-supplied portrait mask. Built-in avatars cover the face, hair, and ears while mirroring head pose, eyes, brows, blinking, mouth shape, smile, and jaw movement. |
 
 ## Privacy
 
 - Camera permission is requested explicitly by the browser and the user can choose a camera after permission is granted.
 - Webcam frames, photos, face embeddings, and hand landmarks are not sent to Flask or stored on disk.
+- Face Studio portrait images are processed in browser memory only and are discarded when the page closes. Use only images you own or are authorized to use.
 - Focus Monitor stores only numeric session metrics in `data/focus_monitor.db`.
 - The application contains no local or remote LLM and requires no API key.
 - All runtimes, models, fonts, caches, and databases are repository-relative.
@@ -95,6 +97,15 @@ Open `http://127.0.0.1:5000`. Browsers allow camera use on localhost. Serving th
 5. Use **Undo** or **Clear** to edit the canvas. Choose an ink color and style before drawing a new stroke.
 6. When a paused stroke resembles a circle, square, arrow, heart, or star, choose **Use clean shape** to accept the suggestion or **Keep original** to dismiss it.
 
+### Face Studio
+
+1. Choose **Face Studio**, confirm that you have permission for the camera and any portrait image, then allow camera access.
+2. Select **Neon Muse**, **Solar Fox**, or **Pixel Pulse** for an opaque full-head avatar. These cover the face, hair, and ears while following live head position, tilt, turn, eye direction, blinking, brows, mouth shape, smile, and jaw movement.
+3. Select **Soft Blur** when you want a local face-only privacy effect instead of an avatar.
+4. For a custom portrait mask, choose **Use portrait mask** and select a PNG, JPEG, or WebP image. The browser never uploads it; it remains in memory only until removed or the page closes.
+5. Center one face in reasonably even front lighting. Portrait masks deliberately retain the live user eyes and mouth so blinking and mouth movement remain synchronized.
+6. Use **Remove portrait** to discard the selected image immediately, or the stop control to release the camera.
+
 ## Camera troubleshooting
 
 - If permission was blocked, use the browser site settings for `127.0.0.1` to allow the camera, then reload the page.
@@ -113,10 +124,10 @@ Get-ChildItem .\static\js\*.js | ForEach-Object { node --check $_.FullName }
 
 ```text
 focus_monitor/       Flask application, routes, and SQLite setup
-static/js/            Camera, focus, finger, expression, and Air Canvas logic
+static/js/            Camera, focus, finger, expression, Air Canvas, and Face Studio logic
 static/models/        Project-local MediaPipe and TensorFlow Lite model files
 static/vendor/        Project-local browser runtimes and model artifacts
-templates/            Flask templates for the dashboard and four tools
+templates/            Flask templates for the dashboard and five tools
 tests/                Flask route and API tests
 setup.ps1             Creates the local Python environment and checks required assets
 start.ps1             Starts the local Waitress server

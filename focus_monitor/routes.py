@@ -61,6 +61,11 @@ def air_canvas():
     return render_template("air_canvas.html")
 
 
+@bp.get("/face-studio")
+def face_studio():
+    return render_template("face_studio.html")
+
+
 @bp.get("/api/health")
 def health():
     return jsonify(status="ok", service="Lumen Focus")
